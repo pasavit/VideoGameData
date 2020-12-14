@@ -36,3 +36,21 @@ class API:
                   f"\n Total Sales: {item.globalSales} \n")
         print(f"{item.name} had sales across all platforms of\n North America: {round(naSalesTotal,2)}"
               f"\n Globally: {totalSales}")
+
+    def get_platform(self, games_list):
+        console = []
+        for item in games_list:
+            if item.platform not in console:
+                console.append(item.platform)
+        return console
+
+
+    def sales_by_console(self, games_list, console_list):
+        consoleSales = []
+        for console in console_list:
+            sales = 0
+            for game in games_list:
+                if game.platform == console:
+                    sales = sales + game.globalSales
+            consoleSales.append({'console' : console, 'sales' : sales})
+        return consoleSales
