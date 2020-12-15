@@ -55,7 +55,7 @@ def filter_by_title():
     return render_template('home/index.html', headings=headings, data=list_games)
 
 
-def find_game(games_list):
+def find_games(games_list):
     print("please enter a title to search for")
     result = []
     titleSearch = input()
@@ -64,6 +64,20 @@ def find_game(games_list):
             result.append(item)
     return result
 
+def select_game(games_list, name):
+    result = []
+    for item in games_list:
+        if item.name == name:
+            result.append(item)
+    return result
+
+
+def get_genre(games_list):
+    genre = []
+    for item in games_list:
+        if item.genre not in genre:
+         genre.append(item.genre)
+    return genre
 
 def sales_platform(result):
     sales = []
@@ -98,3 +112,21 @@ def sales_by_console(games_list, console_list):
                 sales = sales + game.globalSales
         consoleSales.append({'console' : console, 'sales' : sales})
     return consoleSales
+
+def sales_by_genre(genre_list, games_list):
+    genreSales = []
+    for genre in genre_list:
+        totalnasales = 0
+        totaleusales = 0
+        totaljpsales = 0
+        totalothersales = 0
+        for game in games_list:
+            if game.genre == genre:
+                totalnasales += game.naSales
+                totaleusales += game.euSales
+                totaljpsales += game.jpSales
+                totalothersales += game.otherSales
+        genreSales.append(
+            {'Genre' : genre, 'naSales': totalnasales, 'euSales': totaleusales, 'jpSales': totaljpsales, 'otherSales': totalothersales})
+
+    return genreSales
