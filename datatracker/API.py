@@ -14,11 +14,15 @@ bp = Blueprint('home', __name__)
 api_request = requests.get('https://api.dccresource.com/api/games')
 
 
+@bp.route('/test')
+def test():
+    return "All good!"
+
 @bp.route('/home')
 def request_list_games():
     response = api_request
     game_data = json.loads(response.content, object_hook=lambda d: SimpleNamespace(**d))
-    list_games = list(filter(lambda g: str(g.year) == '2017', game_data))
+    list_games = list(filter(lambda g: str(g.year) == '1985', game_data))
     headings = ('Title', 'Platform', 'Year', 'Genre', 'Publisher', 'Sales')
     return render_template('home/index.html', headings=headings, data=list_games)
 
