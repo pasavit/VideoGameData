@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+    <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
@@ -12,21 +14,7 @@
     <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Video Game DATA</a>
     <input class="form-control form-control-dark w-100" type="text" placeholder="Search" label="Search">
     <div class="btn-group">
-      <button type="button" class="btn btn-danger">Search By:</button>
-      <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
-        <span class="sr-only">Drop</span>
-      </button>
-        <div class="dropdown-menu">
-          <button type="submit">Submit</button>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Platform</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Year</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Genre</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Publisher</a>
-        </div>
+      <button type="button" class="btn btn-danger">Search</button>
     </div>
   </header>
   <h2>Game List</h2>
@@ -50,6 +38,39 @@
       </tbody>
     </table>
   </div>
+  <h2>SHART</h2>
+  <div class="ct-chart ct-perfect-fourth" style="width:50%; height:auto;"></div>
+  <script>
+  // Our labels and three data series
+var data = {
+  labels: ['2013', '2014', '2015', '2016'],
+  series: [
+    [5, 4, 3, 7],
+    [3, 2, 9, 5],
+    [10, 7, 3, 0]
+  ]
+};
+
+var options = {
+  showPoint: true,
+  lineSmooth: true,
+
+
+  axisX: {
+    showGrid: true,
+    showLabel: true
+  },
+  axisY: {
+    offset: 80,
+    labelInterpolationFnc: function(value) {
+      return '$' + value + 'm';
+    }
+  }
+};
+
+// All you need to do is pass your configuration as third parameter to the chart function
+new Chartist.Line('.ct-chart', data, options);
+  </script>
 <header>
     {% block header %}{% endblock %}
 </header>
