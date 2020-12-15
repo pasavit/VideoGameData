@@ -15,8 +15,8 @@ def create_app():
     except OSError:
         pass
 
-    from . import sample
-    app.register_blueprint(sample.bp)
+    from . import API
+    app.register_blueprint(API.bp)
     # app.add_url_rule('/', endpoint='index')
 
     @app.route('/hello')
