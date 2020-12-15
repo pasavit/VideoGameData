@@ -9,31 +9,50 @@ from flask_bootstrap import Bootstrap
 bp = Blueprint('home', __name__)
 
 
-# class API:
-#     def __init__(self):
-api_request = requests.get('https://api.dccresource.com/api/games')
-
-
 @bp.route('/test')
 def test():
     return "All good!"
 
+
+def get_api_data():
+    api_request = requests.get('https://api.dccresource.com/api/games')
+    api_data = json.loads(api_request.content, object_hook=lambda d: SimpleNamespace(**d))
+    return api_data
+
+
 @bp.route('/home')
-def request_list_games():
-    response = api_request
-    game_data = json.loads(response.content, object_hook=lambda d: SimpleNamespace(**d))
-    list_games = list(filter(lambda g: str(g.year) == '1985', game_data))
-    headings = ('Title', 'Platform', 'Year', 'Genre', 'Publisher', 'Sales')
+def populate_game_chart():
+    api_data = get_api_data()
+    list_games = list(filter(lambda g: str(g.year) == '2017', api_data))
+    headings = ('Title', 'Platform', 'Year', 'Genre', 'Publisher', 'Sales(mil)')
     return render_template('home/index.html', headings=headings, data=list_games)
 
 
-# def filter_to_dict(list_games):
-#     results = []
-#     game_dict = {'PSV': {'name', 'platform', 'year', 'genre', 'publisher', 'globalSales'},
-#                 'PS4': {'name', 'platform', 'year', 'genre', 'publisher', 'globalSales'}}
-#     for game in list_games:
-#         game_dict[game.]
+def filter_by_year():
+    api_data = get_api_data()
+    year = input()
+    list_games = list(filter(lambda g: str(g.year) == year, api_data))
+    headings = ('Title', 'Platform', 'Year', 'Genre', 'Publisher', 'Sales(mil)')
+    return render_template('home/index.html', headings=headings, data=list_games)
 
+
+def filter_by_console():
+    api_data = get_api_data()
+    console = input()
+    list_games = list(filter(lambda g: str(g.paltform) == console, api_data))
+    headings = ('Title', 'Platform', 'Year', 'Genre', 'Publisher', 'Sales(mil)')
+    return render_template('home/index.html', headings=headings, data=list_games)
+
+
+def filter_by_title():
+    api_data = get_api_data()
+    title = input()
+    list_games = []
+    for item in api_data:
+        if search(title.casefold(), item.name.casefold()):
+            list_games.append(item)
+    headings = ('Title', 'Platform', 'Year', 'Genre', 'Publisher', 'Sales(mil)')
+    return render_template('home/index.html', headings=headings, data=list_games)
 
 
 def find_game(games_list):
