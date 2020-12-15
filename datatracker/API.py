@@ -5,7 +5,6 @@ import requests
 from types import SimpleNamespace
 from re import search
 from flask import Flask, jsonify, request, redirect, flash, render_template, url_for, Blueprint
-from flask_bootstrap import Bootstrap
 bp = Blueprint('home', __name__)
 
 
@@ -44,15 +43,16 @@ def filter_by_console():
     return render_template('home/index.html', headings=headings, data=list_games)
 
 
+@bp.route('/title', methods=['POST'])
 def filter_by_title():
     api_data = get_api_data()
-    title = input()
+    title = request.form.get('title')
     list_games = []
     for item in api_data:
         if search(title.casefold(), item.name.casefold()):
             list_games.append(item)
     headings = ('Title', 'Platform', 'Year', 'Genre', 'Publisher', 'Sales(mil)')
-    return render_template('home/index.html', headings=headings, data=list_games)
+    return render_template('home/title.html', headings=headings, data=list_games)
 
 
 def find_games(games_list):
