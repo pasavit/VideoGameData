@@ -55,7 +55,7 @@ def filter_by_title():
     return render_template('home/index.html', headings=headings, data=list_games)
 
 
-def find_game(games_list):
+def find_games(games_list):
     print("please enter a title to search for")
     result = []
     titleSearch = input()
@@ -63,6 +63,14 @@ def find_game(games_list):
         if search(titleSearch.casefold(), item.name.casefold()):
             result.append(item)
     return result
+
+def select_game(games_list, name):
+    result = []
+    for item in games_list:
+        if item.name == name:
+            result.append(item)
+    return result
+
 
 def get_genre(games_list):
     genre = []
