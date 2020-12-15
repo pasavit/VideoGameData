@@ -18,14 +18,17 @@ api_request = requests.get('https://api.dccresource.com/api/games')
 def request_list_games():
     response = api_request
     game_data = json.loads(response.content, object_hook=lambda d: SimpleNamespace(**d))
-    list_games = list(filter(lambda g: str(g.year) == '2013', game_data))
-    length_list = len(game_data)+1
+    list_games = list(filter(lambda g: str(g.year) == '2017', game_data))
     headings = ('Title', 'Platform', 'Year', 'Genre', 'Publisher', 'Sales')
-    return render_template('home/index.html', headings=headings, data=game_data, its=length_list)
+    return render_template('home/index.html', headings=headings, data=list_games)
 
 
-def filter_to_dict(list_games):
-    game_dict = {'item.name', 'item.platform', 'item.year', 'item.genre', 'item.publisher', 'item.globalSales'}
+# def filter_to_dict(list_games):
+#     results = []
+#     game_dict = {'PSV': {'name', 'platform', 'year', 'genre', 'publisher', 'globalSales'},
+#                 'PS4': {'name', 'platform', 'year', 'genre', 'publisher', 'globalSales'}}
+#     for game in list_games:
+#         game_dict[game.]
 
 
 
