@@ -88,15 +88,16 @@ def sales_platform(result):
     regionSales = []
     totalSales = 0
     naSalesTotal = 0
+    euSales = 0
+    jpSales = 0
+    otherSales = 0
+    globalSales = 0
     for item in result:
         totalSales = totalSales + item.globalSales
         naSalesTotal = naSalesTotal + item.naSales
         sales.append({item.platform, item.globalSales})
         regionSales.append({item.platform,item.naSales})
-        print(f"{item.name}\n  Platform: {item.platform}\n North American Sales: {item.naSales}"
-              f"\n Total Sales: {item.globalSales} \n")
-    print(f"{item.name} had sales across all platforms of\n North America: {round(naSalesTotal,2)}"
-          f"\n Globally: {totalSales}")
+        
 
 
 def get_platform(games_list):
@@ -106,16 +107,32 @@ def get_platform(games_list):
             console.append(item.platform)
     return console
 
-
-def sales_by_console(games_list, console_list):
-    consoleSales = []
+@bp.route('/consoles', methods=['POST'])
+def sales_by_console():
+    games_list = get_api_data()
+    console_list = get_platform(games_list)
+    consoleData = []
     for console in console_list:
-        sales = 0
+        totalnasales = 0
+        totaleusales = 0
+        totaljpsales = 0
+        totalothersales = 0
+        totalGlobalSales = 0
         for game in games_list:
             if game.platform == console:
-                sales = sales + game.globalSales
-        consoleSales.append({'console' : console, 'sales' : sales})
-    return consoleSales
+                totalnasales += game.naSales
+                totaleusales += game.euSales
+                totaljpsales += game.jpSales
+                totalothersales += game.otherSales
+                totalGlobalSales += game.globalSales
+        consoleData.append({'console' : console, 'naSales': round(totalnasales,2), 'euSales': round(totaleusales,2),
+                            'jpSales': round(totaljpsales,2), 'otherSales': round(totalothersales,2), 'globalSales': round(totalGlobalSales,2)})
+
+    # consoleSales = json.dumps(consoleData)
+    headings = ('Console Name', 'North American Sales', 'European Sales', 'Japanese Sales', 'ROW Sales', 'Global Sales')
+    return render_template('home/consoles.html', headings=headings, data=consoleData)
+
+    # return consoleSales
 
 def sales_by_genre(genre_list, games_list):
     genreSales = []
