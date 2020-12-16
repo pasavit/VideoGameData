@@ -1,11 +1,69 @@
-{% extends 'Platform.html' %}
+{% extends 'base.html' %}
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% block chart_header %}
+<h1 style="text-align: center">Game Copies Sold Since 2013</h1>
+{% endblock %}
 
-</body>
-</html>
+{% block chart %}
+<div class="ct-chart ct-perfect-fourth" style="width:100%; height:auto;"></div>
+  <script>
+  // Our labels and three data series
+var data = {
+  labels: ['2013', '2014', '2015', '2016'],
+  series: [
+    [5, 4, 3, 7],
+    [3, 2, 9, 5],
+    [10, 7, 3, 0]
+  ]
+};
+
+var options = {
+  showPoint: true,
+  lineSmooth: true,
+
+
+  axisX: {
+    showGrid: true,
+    showLabel: true
+  },
+  axisY: {
+    offset: 80,
+    labelInterpolationFnc: function(value) {
+      return '$' + value + 'm';
+    }
+  }
+};
+
+// All you need to do is pass your configuration as third parameter to the chart function
+new Chartist.Line('.ct-chart', data, options);
+  </script>
+{% endblock %}
+
+{% block table_header %}
+<h1 style="text-align: center">Console List</h1>
+{% endblock %}
+{% block table %}
+        <div class="table-responsive" style="width:100%;">
+          <table class="table table-striped table-sm">
+            <thead>
+              <tr>
+                {% for header in headings %}
+                <th>{{ header }}</th>
+                {% endfor %}
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in data %}
+              <tr>
+                 <td>{{ item.console }}</td>
+                  <td>{{ item.naSales }}</td>
+                  <td>{{ item.euSales }}</td>
+                  <td>{{ item.jpSales }}</td>
+                  <td>{{ item.otherSales }}</td>
+                  <td>{{ item.globalSales }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+{% endblock %}
