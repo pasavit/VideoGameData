@@ -65,16 +65,18 @@ def find_games(games_list):
     return result
 
 
-@bp.route('/name', methods=['POST'])
-def select_game():
+@bp.route('/name/<name>', methods=['GET', 'POST'])
+def select_game(name):
     result = []
+    title = name
     api_data = get_api_data()
-    name = request.form.get('name')
+    # name = request.form.get('name')
     headings = ('Title', 'Platform', 'Year', 'Genre', 'Publisher', 'Sales(mil)')
     for item in api_data:
-        if item.name == name:
+        if item.name == title:
             result.append(item)
     return render_template('home/name.html', headings=headings, data=result)
+
 
 def get_genre(games_list):
     genre = []
@@ -107,7 +109,8 @@ def get_platform(games_list):
             console.append(item.platform)
     return console
 
-@bp.route('/consoles', methods=['POST'])
+
+@bp.route('/consoles', methods=['GET', 'POST'])
 def sales_by_console():
     games_list = get_api_data()
     console_list = get_platform(games_list)
@@ -133,6 +136,7 @@ def sales_by_console():
     return render_template('home/consoles.html', headings=headings, data=consoleData)
 
     # return consoleSales
+
 
 def sales_by_genre(genre_list, games_list):
     genreSales = []
