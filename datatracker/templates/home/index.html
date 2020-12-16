@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
-{% block header %}
+{% block chart_header %}
 <h1 style="text-align: center">{% block title %} SHART {% endblock %}</h1>
 {% endblock %}
 
-{% block content %}
+{% block chart %}
 <!--<p>This starter code project is built around a 'sample.py' module. Its view files live in 'templates/sample'. It's recommended you build your own project module and template folder for your contributions to the project.</p>-->
 
 <!--<p>This page extends the "base.html" file and inserts its various "blocks" (header, title and content) into the locations laid out for those blocks.</p>-->
@@ -22,7 +22,7 @@
 <!--{% endif %}-->
 <!--{% endfor %}-->
 <!--<p>(Always remember to close off your ifs and your loops!)</p>-->
-<div class="ct-chart ct-perfect-fourth" style="width:50%; height:auto;"></div>
+<div class="ct-chart ct-perfect-fourth" style="width:100%; height:auto;"></div>
   <script>
   // Our labels and three data series
 var data = {
@@ -55,6 +55,34 @@ var options = {
 new Chartist.Line('.ct-chart', data, options);
   </script>
 
+{% endblock %}
+{% block table_header %}
+<h1 style="text-align: center">Game List</h1>
+{% endblock %}
+{% block table %}
+<div class="table-responsive" style="width:100%;">
+          <table class="table table-striped table-sm">
+            <thead>
+              <tr>
+                {% for header in headings %}
+                <th>{{ header }}</th>
+                {% endfor %}
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in data %}
+              <tr>
+                  <td><a href="/name/{{ row.name }}">{{ row.name }}</a></td>
+                  <td>{{ row.platform }}</td>
+                  <td>{{ row.year }}</td>
+                  <td>{{ row.genre }}</td>
+                  <td>{{ row.publisher }}</td>
+                  <td>{{ row.globalSales }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
 {% endblock %}
 
 
