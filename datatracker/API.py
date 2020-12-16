@@ -137,21 +137,27 @@ def sales_by_console():
 
     # return consoleSales
 
-
-def sales_by_genre(genre_list, games_list):
+@bp.route('/genres', methods=['POST'])
+def sales_by_genre():
+    games_list = get_api_data()
+    genre_list = get_genre(games_list)
     genreSales = []
     for genre in genre_list:
         totalnasales = 0
         totaleusales = 0
         totaljpsales = 0
         totalothersales = 0
+        totalGlobalSales = 0
         for game in games_list:
             if game.genre == genre:
                 totalnasales += game.naSales
                 totaleusales += game.euSales
                 totaljpsales += game.jpSales
                 totalothersales += game.otherSales
-        genreSales.append(
-            {'Genre' : genre, 'naSales': totalnasales, 'euSales': totaleusales, 'jpSales': totaljpsales, 'otherSales': totalothersales})
+                totalGlobalSales += game.globalSales
+        genreSales.append({'genre': genre, 'naSales': round(totalnasales, 2), 'euSales': round(totaleusales, 2),
+                           'jpSales': round(totaljpsales,2), 'otherSales': round(totalothersales,2),
+                           'globalSales': round(totalGlobalSales,2)})
+    headings = ('Genre', 'North American Sales', 'European Sales', 'Japanese Sales', 'ROW Sales', 'Global Sales')
+    return render_template('home/genres.html', headings=headings, data=genreSales)
 
-    return genreSales
