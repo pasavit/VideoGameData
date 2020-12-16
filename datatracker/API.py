@@ -123,7 +123,10 @@ def sales_by_console():
     games_list = get_new_data()
     console_list = get_platform(games_list)
     consoleData = []
+    x_axis = []
+    y_axis = []
     for console in console_list:
+        x_axis.append(console)
         totalnasales = 0
         totaleusales = 0
         totaljpsales = 0
@@ -136,10 +139,12 @@ def sales_by_console():
                 totaljpsales += game.jpSales
                 totalothersales += game.otherSales
                 totalGlobalSales += game.globalSales
-        consoleData.append({'console' : console, 'naSales': round(totalnasales,2), 'euSales': round(totaleusales,2),
-                            'jpSales': round(totaljpsales,2), 'otherSales': round(totalothersales,2), 'globalSales': round(totalGlobalSales,2)})
-    headings = ('Console Name', 'North American Sales', 'European Sales', 'Japanese Sales', 'ROW Sales', 'Global Sales')
-    return render_template('home/consoles.html', headings=headings, data=consoleData)
+        consoleData.append({'console': console, 'naSales': round(totalnasales, 2), 'euSales': round(totaleusales, 2),
+                           'jpSales': round(totaljpsales,2), 'otherSales': round(totalothersales,2),
+                           'globalSales': round(totalGlobalSales,2)})
+        y_axis.append(round(totalGlobalSales, 2))
+    headings = ('Console', 'NA Sales', 'EU Sales', 'Japan Sales', 'ROW Sales', 'Global Sales')
+    return render_template('home/consoles.html', headings=headings, data=consoleData, x_axis=x_axis, y_axis=y_axis)
 
 
 @bp.route('/genres', methods=['GET', 'POST'])

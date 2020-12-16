@@ -6,37 +6,134 @@
 
 {% block chart %}
 <div class="ct-chart ct-perfect-fourth" style="width:100%; height:auto;"></div>
-  <script>
-  // Our labels and three data series
+<!--  <script>-->
+<!--var getData = $.get('/consoles');-->
+<!--getData.done(function(y_axis){-->
+<!--    var test = y_axis;-->
+
+<!--  var data = {-->
+<!--    labels: ['PS3', 'X360', '3DS', 'PS4', 'XOne', 'WiiU', 'Wii', 'PC', 'PSV', 'DS', 'PSP'],-->
+<!--    series: [189.16, 139.91, 132.61, 278.1, 141.06, 64.02, 15.35, 36.89, 37.95, 1.98, 3.55]-->
+<!--  };-->
+
+<!--  var options = {-->
+<!--    showPoint: true,-->
+<!--    lineSmooth: true,-->
+<!--    axisX: {-->
+<!--      showGrid: true,-->
+<!--      showLabel: true-->
+<!--    },-->
+<!--    axisY: {-->
+<!--      offset: 80,-->
+<!--      labelInterpolationFnc: function(value) {-->
+<!--        return '$' + value + 'm';-->
+<!--      }-->
+<!--    }-->
+<!--  };-->
+
+<!--  new Chartist.Line('.ct-chart', data, options);-->
+<!--});-->
+
+<!--  </script>-->
+
+
+
+<!--<script>-->
+
+
+
+<!--var labelArray = [];-->
+<!--{% for item in x_axis %}-->
+<!--labelArray.push('{{ item }}');-->
+<!--{% endfor %}-->
+
+<!--//push acutal data coming from controller into lalbelArray using a loop-->
+
+<!--var data = {-->
+<!--  labels: labelArray-->
+<!--,-->
+
+<!--  series: [-->
+<!--    {% for item in y_axis %}-->
+<!--{{ item }},-->
+<!--{% endfor %}-->
+<!--  ]-->
+<!--};-->
+<!--console.log(data);-->
+
+
+<!--var options = {-->
+<!--  seriesBarDistance: 15-->
+<!--};-->
+
+<!--var responsiveOptions = [-->
+<!--  ['screen and (min-width: 641px) and (max-width: 1024px)', {-->
+<!--    seriesBarDistance: 10,-->
+<!--    axisX: {-->
+<!--      labelInterpolationFnc: function (value) {-->
+<!--        return value;-->
+<!--      }-->
+<!--    }-->
+<!--  }],-->
+<!--  ['screen and (max-width: 640px)', {-->
+<!--    seriesBarDistance: 5,-->
+<!--    axisX: {-->
+<!--      labelInterpolationFnc: function (value) {-->
+<!--        return value[0];-->
+<!--      }-->
+<!--    }-->
+<!--  }]-->
+<!--];-->
+
+<!--// All you need to do is pass your configuration as third parameter to the chart function-->
+<!--new Chartist.Bar('.ct-chart', data, options);-->
+<!--  </script>-->
+
+
+<script>
+var labelArray = [];
+
+{% for item in x_axis %}
+labelArray.push('{{ item }}');
+{% endfor %}
+
+var seriesArray = [];
+{% for item in y_axis %}
+seriesArray.push('{{ item }}');
+{% endfor %}
+
 var data = {
-  labels: ['2013', '2014', '2015', '2016'],
-  series: [
-    [5, 4, 3, 7],
-    [3, 2, 9, 5],
-    [10, 7, 3, 0]
-  ]
+  labels: labelArray,
+    series: [seriesArray]
 };
 
 var options = {
-  showPoint: true,
-  lineSmooth: true,
-
-
-  axisX: {
-    showGrid: true,
-    showLabel: true
-  },
-  axisY: {
-    offset: 80,
-    labelInterpolationFnc: function(value) {
-      return '$' + value + 'm';
-    }
-  }
+  seriesBarDistance: 15
 };
 
-// All you need to do is pass your configuration as third parameter to the chart function
-new Chartist.Line('.ct-chart', data, options);
-  </script>
+var responsiveOptions = [
+  ['screen and (min-width: 641px) and (max-width: 1024px)', {
+    seriesBarDistance: 10,
+    axisX: {
+      labelInterpolationFnc: function (value) {
+        return value;
+      }
+    }
+  }],
+  ['screen and (max-width: 640px)', {
+    seriesBarDistance: 5,
+    axisX: {
+      labelInterpolationFnc: function (value) {
+        return value[0];
+      }
+    }
+  }]
+];
+
+new Chartist.Bar('.ct-chart', data, options, responsiveOptions);
+
+</script>
+
 {% endblock %}
 
 {% block table_header %}
