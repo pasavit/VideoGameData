@@ -36,27 +36,24 @@
                 <input type="text" name="title" placeholder="Search by Title"></input>
                 <input type="submit" value="Search"></input>
               </form>
-              <!-- <a class="nav-link" href="#">
-                Title
-              </a> -->
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="javascript:alert('Will be available soon!');">
                 Platform
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="javascript:alert('Will be available soon!');">
                 Year
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="javascript:alert('Will be available soon!');">
                 Genre
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="javascript:alert('Will be available soon!');">
                 Publisher
               </a>
             </li>
@@ -97,7 +94,7 @@
             <tbody>
               {% for row in data %}
               <tr>
-                  <td>{{ row.name }}</td>
+                  <td><a href="/name" value="{{ row.name }}">{{ row.name }}</a></input></td>
                   <td>{{ row.platform }}</td>
                   <td>{{ row.year }}</td>
                   <td>{{ row.genre }}</td>

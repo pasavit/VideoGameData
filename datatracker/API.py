@@ -64,13 +64,17 @@ def find_games(games_list):
             result.append(item)
     return result
 
-def select_game(games_list, name):
+
+@bp.route('/name', methods=['POST'])
+def select_game():
     result = []
-    for item in games_list:
+    api_data = get_api_data()
+    name = request.form.get('name')
+    headings = ('Title', 'Platform', 'Year', 'Genre', 'Publisher', 'Sales(mil)')
+    for item in api_data:
         if item.name == name:
             result.append(item)
-    return result
-
+    return render_template('home/name.html', headings=headings, data=result)
 
 def get_genre(games_list):
     genre = []
