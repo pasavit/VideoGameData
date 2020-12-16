@@ -17,24 +17,24 @@
           <ul class="nav flex-column">
 
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="/home">
                 <span data-feather="layers"></span>
-                Publisher
+                Home Page
               </a>
             </li>
           </ul>
   
           <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-            <span>Saved reports</span>
-            <a class="link-secondary" href="#" aria-label="Add a new report">
+            <span>Home</span>
+            <a class="link-secondary" href="/index" aria-label="Add a new report">
               <span data-feather="plus-circle"></span>
             </a>
           </h6>
           <ul class="nav flex-column mb-2">
             <li class="nav-item">
-              <a class="nav-link" href="#">
-                <span data-feather="file-text"></span>
-                Console Most Copies
+              <a class="nav-link" href="/genres">
+                <span data-feather="layers"></span>
+                Genres by Region
               </a>
             </li>
           </ul>
@@ -79,7 +79,7 @@
   <script>
   // Our labels and three data series
 var data = {
-  labels: ['2013', '2014', '2015', '2016'],
+  labels: { headings },
   series: [
     [5, 4, 3, 7],
     [3, 2, 9, 5],

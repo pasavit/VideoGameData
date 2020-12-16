@@ -18,6 +18,14 @@ def get_api_data():
     api_data = json.loads(api_request.content, object_hook=lambda d: SimpleNamespace(**d))
     return api_data
 
+def get_new_data():
+    api_request = requests.get('https://api.dccresource.com/api/games')
+    api_data = json.loads(api_request.content, object_hook=lambda d: SimpleNamespace(**d))
+    list_games = list(filter(lambda d: str(d.year) == '2013' or str(d.year) == '2014'
+                             or str(d.year) == '2015' or str(d.year) == '2016' or str(d.year) == '2017'
+                             , api_data))
+    return list_games
+
 
 @bp.route('/home')
 def populate_game_chart():
@@ -112,7 +120,7 @@ def get_platform(games_list):
 
 @bp.route('/consoles', methods=['GET', 'POST'])
 def sales_by_console():
-    games_list = get_api_data()
+    games_list = get_new_data()
     console_list = get_platform(games_list)
     consoleData = []
     for console in console_list:
@@ -130,14 +138,11 @@ def sales_by_console():
                 totalGlobalSales += game.globalSales
         consoleData.append({'console' : console, 'naSales': round(totalnasales,2), 'euSales': round(totaleusales,2),
                             'jpSales': round(totaljpsales,2), 'otherSales': round(totalothersales,2), 'globalSales': round(totalGlobalSales,2)})
-
-    # consoleSales = json.dumps(consoleData)
     headings = ('Console Name', 'North American Sales', 'European Sales', 'Japanese Sales', 'ROW Sales', 'Global Sales')
     return render_template('home/consoles.html', headings=headings, data=consoleData)
 
-    # return consoleSales
 
-@bp.route('/genres', methods=['POST'])
+@bp.route('/genres', methods=['GET', 'POST'])
 def sales_by_genre():
     games_list = get_api_data()
     genre_list = get_genre(games_list)
