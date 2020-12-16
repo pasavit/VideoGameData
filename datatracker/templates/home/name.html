@@ -7,35 +7,44 @@
 {% block chart %}
 <div class="ct-chart ct-perfect-fourth" style="width:100%; height:auto;"></div>
   <script>
-  // Our labels and three data series
-var data = {
-  labels: ['2013', '2014', '2015', '2016'],
-  series: [
-    [5, 4, 3, 7],
-    [3, 2, 9, 5],
-    [10, 7, 3, 0]
-  ]
+
+  var labelArray = [];
+    {% for item in label %}
+    labelArray.push('{{ item }}');
+    {% endfor %}
+
+  var seriesArray = [];
+    {% for item in series %}
+    seriesArray.push('{{ item }}');
+    {% endfor %}
+
+  var data = {
+  labels: labelArray,
+  series: seriesArray
 };
 
 var options = {
-  showPoint: true,
-  lineSmooth: true,
-
-
-  axisX: {
-    showGrid: true,
-    showLabel: true
-  },
-  axisY: {
-    offset: 80,
-    labelInterpolationFnc: function(value) {
-      return '$' + value + 'm';
-    }
+  labelInterpolationFnc: function(value) {
+    return value[0]
   }
 };
 
-// All you need to do is pass your configuration as third parameter to the chart function
-new Chartist.Line('.ct-chart', data, options);
+var responsiveOptions = [
+  ['screen and (min-width: 640px)', {
+    chartPadding: 30,
+    labelOffset: 100,
+    labelDirection: 'explode',
+    labelInterpolationFnc: function(value) {
+      return value;
+    }
+  }],
+  ['screen and (min-width: 1024px)', {
+    labelOffset: 80,
+    chartPadding: 20
+  }]
+];
+
+new Chartist.Pie('.ct-chart', data, options, responsiveOptions);
   </script>
 
 {% endblock %}
