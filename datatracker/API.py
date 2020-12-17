@@ -155,6 +155,7 @@ def sales_by_genre():
     games_list = get_api_data()
     genre_list = get_genre(games_list)
     genreSales = []
+    series = []
     for genre in genre_list:
         totalnasales = 0
         totaleusales = 0
@@ -171,6 +172,10 @@ def sales_by_genre():
         genreSales.append({'genre': genre, 'naSales': round(totalnasales, 2), 'euSales': round(totaleusales, 2),
                            'jpSales': round(totaljpsales,2), 'otherSales': round(totalothersales,2),
                            'globalSales': round(totalGlobalSales,2)})
+        series.append([round(totalnasales, 2),round(totaleusales, 2),round(totaljpsales),round(totalothersales,2)])
     headings = ('Genre', 'North American Sales', 'European Sales', 'Japanese Sales', 'ROW Sales', 'Global Sales')
-    return render_template('home/genres.html', headings=headings, data=genreSales)
+    header = ('North American Sales', 'European Sales', 'Japanese Sales', 'ROW Sales')
+    legend = ()
+    return render_template('home/genres.html', headings=headings, data=genreSales, genre=genre_list,
+                           series=series, header=header)
 
