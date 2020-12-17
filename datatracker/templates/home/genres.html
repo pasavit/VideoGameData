@@ -6,36 +6,38 @@
 
 {% block chart %}
 <div class="ct-chart ct-perfect-fourth" style="width:100%; height:auto;"></div>
-  <script>
-  // Our labels and three data series
-var data = {
-  labels: ['2013', '2014', '2015', '2016'],
-  series: [
-    [5, 4, 3, 7],
-    [3, 2, 9, 5],
-    [10, 7, 3, 0]
-  ]
-};
+ <script>
+    class MyCharts{
+        constructor(xData, yData)
+        {
+            this.xData = xData;
+            this.yData = yData;
 
-var options = {
-  showPoint: true,
-  lineSmooth: true,
-
-
-  axisX: {
-    showGrid: true,
-    showLabel: true
-  },
-  axisY: {
-    offset: 80,
-    labelInterpolationFnc: function(value) {
-      return '$' + value + 'm';
+        }
+        createGraph()
+        {
+            var data =
+            {
+                labels: this.xData,
+                series:  this.yData
+            }
+            new Chartist.Bar('.ct-chart', data);
+        }
     }
-  }
-};
 
-// All you need to do is pass your configuration as third parameter to the chart function
-new Chartist.Line('.ct-chart', data, options);
+    var labels =[];
+    {% for item in header %}
+    labels.push('{{ item }}');
+    {% endfor %}
+
+    var series = [];
+    {% for item in series %}
+    series.push({{ item }});
+    {% endfor %}
+
+    var obj = new MyCharts(labels, series);
+    obj.createGraph();
+
   </script>
 {% endblock %}
 
