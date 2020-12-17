@@ -3,16 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-
     <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
     <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
 </head>
 <body style="margin-bottom:2.5rem">
   <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
@@ -24,7 +20,6 @@
       </svg></i></a>
     </div>
   </header>
-  
   <div class="container-fluid">
     <div class="row">
       <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
@@ -34,7 +29,6 @@
               <h6>SEARCH BY:</h6>
             </li>
             <li class="nav-item">
-
               <a class="nav-link" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
                 Title
               </a>
@@ -46,8 +40,9 @@
               </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="javascript:alert('Will be available soon!');">Platform</a>
-
+              <a class="nav-link" href="javascript:alert('Will be available soon!');">
+                Platform
+              </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="javascript:alert('Will be available soon!');">
@@ -65,7 +60,6 @@
               </a>
             </li>
           </ul>
-  
           <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
             <span>Saved reports</span>
             <a class="link-secondary" href="#" aria-label="Add a new report">
@@ -75,44 +69,38 @@
             <li class="nav-item">
               <a class="nav-link" href="/consoles">Games Sold Per Console</a>
             </li>
-              <li class="nav-item">
-                   <a class="nav-link" href="/genres">Genre Sales by Region</a>
-              </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/genres">Genre Sales by Region</a>
+            </li>
           </ul>
         </div>
       </nav>
-  
       <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <header>
+          <header>
             {% block chart_header %}{% endblock %}
-            </header>
+          </header>
         </div>
         <div>
-           {% block chart %}{% endblock %}
+            {% block chart %}{% endblock %}
         </div>
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <header>
-                {% block table_header %}{% endblock %}
-            </header>
+          <header>
+            {% block table_header %}{% endblock %}
+          </header>
         </div>
         <div>
-              {% block table %}{% endblock %}
+            {% block table %}{% endblock %}
         </div>
       </main>
     </div>
   </div>
-  
   <footer id="sticky-footer" class="py-2 bg-dark text-white-50 footer">
     <div class="container">
       <small style="color:brown">Copyright &copy; 2020 DCC ST00GES</small>
     </div>
   </footer>
   </body>
-
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-
   <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
-  
   </html>

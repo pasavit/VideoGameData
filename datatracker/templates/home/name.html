@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
+
 {% block chart_header %}
 <h1 style="text-align: center">{% block title %} Sales Distribution By Platform {% endblock %}</h1>
 {% endblock %}
@@ -45,8 +46,8 @@
 
     new Chartist.Pie('.ct-chart', data, options, responsiveOptions);
   </script>
-
 {% endblock %}
+
 {% block table_header %}
 <h1 style="text-align: center">Game List</h1>
 {% endblock %}
