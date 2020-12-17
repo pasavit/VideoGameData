@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block chart_header %}
-<h1 style="text-align: center">Genre Sales By Region</h1>
+<h1 style="text-align: center">Genre Sales By Region</h1><h8>*million units</h8>
 {% endblock %}
 
 {% block chart %}
@@ -39,6 +39,22 @@
     obj.createGraph();
 
   </script>
+<div class="container-legend">
+    <p style="text-align:center"><b>
+      <span style="color:rgb(255, 0, 0)" >SPORTS</span> |
+      <span style="color:rgb(241, 98, 98)" >PLATFORM</span> |
+      <span style="color:rgb(243, 227, 4)" >RACING</span>|
+      <span style="color:rgb(211, 120, 0)" >ROLE-PLAYING</span> |
+      <span style="color:rgb(51, 37, 24)" >PUZZLE</span> |
+      <span style="color:rgb(35, 136, 4)" >MISC</span> |
+      <span style="color:rgb(0, 4, 255)" >SHOOTER</span> |
+      <span style="color:rgb(117, 19, 230)" >SIMULATION</span> |
+      <span style="color:rgb(238, 68, 82)" >ACTION</span> |
+      <span style="color:rgb(212, 173, 66)" >FIGHTING</span> |
+      <span style="color:rgb(235, 212, 110)" >ADVENTURE</span> |
+      <span style="color:rgb(110, 105, 105)" >STRATEGY</span>
+    </b></p>
+</div>
 {% endblock %}
 
 {% block table_header %}
@@ -57,7 +73,7 @@
             <tbody>
               {% for item in data %}
               <tr>
-                 <td>{{ item.genre }}</td>
+                  <td>{{ item.genre }}</td>
                   <td>{{ item.naSales }}</td>
                   <td>{{ item.euSales }}</td>
                   <td>{{ item.jpSales }}</td>

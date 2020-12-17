@@ -16,6 +16,11 @@ body {
   height: 2.5rem;
   text-align: right;
 }
+.ct-chart{
+  font-size: large;
+  font-weight:900;
+}
+
 /*
  * Sidebar
  */

@@ -1,50 +1,49 @@
 {% extends 'base.html' %}
 
 {% block chart_header %}
-<h1 style="text-align: center">{% block title %} SHART {% endblock %}</h1>
+<h1 style="text-align: center">{% block title %} Sales Distribution By Platform {% endblock %}</h1>
 {% endblock %}
 
 {% block chart %}
-<div class="ct-chart ct-perfect-fourth" style="width:100%; height:auto;"></div>
+<div class="ct-chart ct-perfect-fourth pie-chart" style="width:100%; height:auto;"></div>
   <script>
+      var labelArray = [];
+        {% for item in label %}
+        labelArray.push('{{ item }}');
+        {% endfor %}
 
-  var labelArray = [];
-    {% for item in label %}
-    labelArray.push('{{ item }}');
-    {% endfor %}
+      var seriesArray = [];
+        {% for item in series %}
+        seriesArray.push('{{ item }}');
+        {% endfor %}
 
-  var seriesArray = [];
-    {% for item in series %}
-    seriesArray.push('{{ item }}');
-    {% endfor %}
+      var data = {
+      labels: labelArray,
+      series: seriesArray
+    };
 
-  var data = {
-  labels: labelArray,
-  series: seriesArray
-};
+    var options = {
+      labelInterpolationFnc: function(value) {
+        return value[0]
+      }
+    };
 
-var options = {
-  labelInterpolationFnc: function(value) {
-    return value[0]
-  }
-};
+    var responsiveOptions = [
+      ['screen and (min-width: 640px)', {
+        chartPadding: 30,
+        labelOffset: 100,
+        labelDirection: 'explode',
+        labelInterpolationFnc: function(value) {
+          return value;
+        }
+      }],
+      ['screen and (min-width: 1024px)', {
+        labelOffset: 80,
+        chartPadding: 20
+      }]
+    ];
 
-var responsiveOptions = [
-  ['screen and (min-width: 640px)', {
-    chartPadding: 30,
-    labelOffset: 100,
-    labelDirection: 'explode',
-    labelInterpolationFnc: function(value) {
-      return value;
-    }
-  }],
-  ['screen and (min-width: 1024px)', {
-    labelOffset: 80,
-    chartPadding: 20
-  }]
-];
-
-new Chartist.Pie('.ct-chart', data, options, responsiveOptions);
+    new Chartist.Pie('.ct-chart', data, options, responsiveOptions);
   </script>
 
 {% endblock %}
@@ -64,7 +63,7 @@ new Chartist.Pie('.ct-chart', data, options, responsiveOptions);
             <tbody>
               {% for row in data %}
               <tr>
-                  <td><a href="/name/{{ row.name }}">{{ row.name }}</a></td>
+                  <td>{{ row.name }}</td>
                   <td>{{ row.platform }}</td>
                   <td>{{ row.year }}</td>
                   <td>{{ row.genre }}</td>

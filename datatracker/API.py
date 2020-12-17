@@ -12,6 +12,11 @@ def test():
     return "All good!"
 
 
+@bp.route('/us')
+def us():
+    return render_template('home/us.html')
+
+
 def get_api_data():
     api_request = requests.get('https://api.dccresource.com/api/games')
     api_data = json.loads(api_request.content, object_hook=lambda d: SimpleNamespace(**d))
