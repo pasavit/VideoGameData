@@ -1,7 +1,6 @@
 import json
 import requests
 
-
 from types import SimpleNamespace
 from re import search
 from flask import Flask, jsonify, request, redirect, flash, render_template, url_for, Blueprint
@@ -17,6 +16,7 @@ def get_api_data():
     api_request = requests.get('https://api.dccresource.com/api/games')
     api_data = json.loads(api_request.content, object_hook=lambda d: SimpleNamespace(**d))
     return api_data
+
 
 def get_new_data():
     api_request = requests.get('https://api.dccresource.com/api/games')
@@ -66,9 +66,9 @@ def filter_by_title():
 def find_games(games_list):
     print("please enter a title to search for")
     result = []
-    titleSearch = input()
+    title_search = input()
     for item in games_list:
-        if search(titleSearch.casefold(), item.name.casefold()):
+        if search(title_search.casefold(), item.name.casefold()):
             result.append(item)
     return result
 
@@ -93,7 +93,7 @@ def get_genre(games_list):
     genre = []
     for item in games_list:
         if item.genre not in genre:
-         genre.append(item.genre)
+            genre.append(item.genre)
     return genre
 
 def sales_platform(result):
@@ -109,7 +109,7 @@ def sales_platform(result):
         totalSales = totalSales + item.globalSales
         naSalesTotal = naSalesTotal + item.naSales
         sales.append({item.platform, item.globalSales})
-        regionSales.append({item.platform,item.naSales})
+        regionSales.append({item.platform, item.naSales})
         
 
 
@@ -125,29 +125,29 @@ def get_platform(games_list):
 def sales_by_console():
     games_list = get_new_data()
     console_list = get_platform(games_list)
-    consoleData = []
+    console_data = []
     x_axis = []
     y_axis = []
     for console in console_list:
         x_axis.append(console)
-        totalnasales = 0
-        totaleusales = 0
-        totaljpsales = 0
-        totalothersales = 0
-        totalGlobalSales = 0
+        total_na_sales = 0
+        total_eu_sales = 0
+        total_jp_sales = 0
+        total_other_sales = 0
+        total_global_sales = 0
         for game in games_list:
             if game.platform == console:
-                totalnasales += game.naSales
-                totaleusales += game.euSales
-                totaljpsales += game.jpSales
-                totalothersales += game.otherSales
-                totalGlobalSales += game.globalSales
-        consoleData.append({'console': console, 'naSales': round(totalnasales, 2), 'euSales': round(totaleusales, 2),
-                           'jpSales': round(totaljpsales,2), 'otherSales': round(totalothersales,2),
-                           'globalSales': round(totalGlobalSales,2)})
-        y_axis.append(round(totalGlobalSales, 2))
+                total_na_sales += game.naSales
+                total_eu_sales += game.euSales
+                total_jp_sales += game.jpSales
+                total_other_sales += game.otherSales
+                total_global_sales += game.globalSales
+        console_data.append({'console': console, 'naSales': round(total_na_sales, 2), 'euSales': round(total_eu_sales, 2),
+                           'jpSales': round(total_jp_sales, 2), 'otherSales': round(total_other_sales, 2),
+                           'globalSales': round(total_global_sales, 2)})
+        y_axis.append(round(total_global_sales, 2))
     headings = ('Console', 'NA Sales', 'EU Sales', 'Japan Sales', 'ROW Sales', 'Global Sales')
-    return render_template('home/consoles.html', headings=headings, data=consoleData, x_axis=x_axis, y_axis=y_axis)
+    return render_template('home/consoles.html', headings=headings, data=console_data, x_axis=x_axis, y_axis=y_axis)
 
 
 @bp.route('/genres', methods=['GET', 'POST'])
@@ -157,22 +157,22 @@ def sales_by_genre():
     genreSales = []
     series = []
     for genre in genre_list:
-        totalnasales = 0
-        totaleusales = 0
-        totaljpsales = 0
-        totalothersales = 0
-        totalGlobalSales = 0
+        total_na_sales = 0
+        total_eu_sales = 0
+        total_jp_sales = 0
+        total_other_sales = 0
+        total_global_sales = 0
         for game in games_list:
             if game.genre == genre:
-                totalnasales += game.naSales
-                totaleusales += game.euSales
-                totaljpsales += game.jpSales
-                totalothersales += game.otherSales
-                totalGlobalSales += game.globalSales
-        genreSales.append({'genre': genre, 'naSales': round(totalnasales, 2), 'euSales': round(totaleusales, 2),
-                           'jpSales': round(totaljpsales,2), 'otherSales': round(totalothersales,2),
-                           'globalSales': round(totalGlobalSales,2)})
-        series.append([round(totalnasales, 2),round(totaleusales, 2),round(totaljpsales),round(totalothersales,2)])
+                total_na_sales += game.naSales
+                total_eu_sales += game.euSales
+                total_jp_sales += game.jpSales
+                total_other_sales += game.otherSales
+                total_global_sales += game.globalSales
+        genreSales.append({'genre': genre, 'naSales': round(total_na_sales, 2), 'euSales': round(total_eu_sales, 2),
+                           'jpSales': round(total_jp_sales, 2), 'otherSales': round(total_other_sales, 2),
+                           'globalSales': round(total_global_sales, 2)})
+        series.append([round(total_na_sales, 2),round(total_eu_sales, 2),round(total_jp_sales),round(total_other_sales,2)])
     headings = ('Genre', 'North American Sales', 'European Sales', 'Japanese Sales', 'ROW Sales', 'Global Sales')
     header = ('North American Sales', 'European Sales', 'Japanese Sales', 'ROW Sales')
     legend = ()
